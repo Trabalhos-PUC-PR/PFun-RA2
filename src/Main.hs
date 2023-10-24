@@ -1,7 +1,9 @@
 module Main where
-
-main = do
-  print "Hello, World!"
+-- Grupo:
+-- André Luiz Kovalski
+-- Gabrielle Louise
+-- Leonardo Ikeda
+-- Leonardo Knight
 
   -- Todas as questões apresentadas a seguir devem ser respondidas por meio de códigos em Haskell
   -- e disponibilizados em um ambiente onde seja possível ler e executar estes códigos, sem qualquer ação
@@ -11,10 +13,29 @@ main = do
 
   -- 1. Escreva uma função que devolva a soma de todos os números menores que 10.000 que sejam
   -- múltiplos de 3 ou 5 e não sejam múltiplos de 2.
+ex1 = sum (ex1Logic 0 [])
+
+ex1Logic :: Int -> [Int] -> [Int]
+ex1Logic 10000 acc = acc
+ex1Logic current acc
+ | odd current && (mod current 5 == 0 || mod current 3 == 0) = ex1Logic (current+1) (acc++[current])   
+ | otherwise = ex1Logic (current+1) acc
 
   -- 2. Escreva uma função que devolva a diferença entre a soma de todos os números de Fibonacci
   -- ímpares menores que 100.000 e a soma de todos os números de Fibonacci pares também
   -- menores que 100.000.
+fiboGenerator :: Int -> (Int->Bool) -> [Int]
+fiboGenerator n f = fibo n f [] [0, 1]
+
+last2:: [Int] -> Int
+last2 list = head(tail(reverse list))
+
+-- target, function, fiboList, list
+fibo :: Int -> (Int->Bool) -> [Int] -> [Int] -> [Int]
+fibo target function filtered list
+  | last list >= target = filtered
+  | function (last list + last2 list) = fibo target function (list++[last list + last2 list]) (filtered++[last list + last2 list]) 
+  | otherwise = fibo target function (list++[last list + last2 list]) filtered
 
   -- 3. Fatorar um número em seus divisores primos é uma tarefa importante para a segurança de dados.
   -- Escreva uma função que devolva os fatores primos de qualquer inteiro dado maior que
@@ -41,3 +62,11 @@ main = do
   -- 9. Escreva uma função análoga a função map, disponível no prelude, na qual um predicado, função,
   -- seja aplicado a duas listas e não a apenas uma. Por exemplo 𝑚𝑎𝑝2 (+) [1,2,3] [10,11,12] deve
   -- retornar [11,13,15]
+
+main::IO()
+main = do
+  print ex1
+  -- print (fiboGenerator 100000 odd)
+  -- print (fiboGenerator 100000 even)
+  print (fiboGenerator 10 odd)
+  print (fiboGenerator 10 even)
