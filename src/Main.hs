@@ -1,7 +1,7 @@
 module Main where
 import Prelude
 import GHC.Float.RealFracMethods (floorFloatInt)
-import Data.List (sort)
+import Data.List (sort, (\\))
 
 -- Grupo:
 -- André Luiz Kovalski
@@ -86,6 +86,23 @@ ex4 lista = sum(map (^ 2) lista) - (^) (sum lista) 2
   -- 5. O Crivo de Eratóstenes não é o melhor algoritmo para encontrar números primos. Crie uma função
   -- que implemente o Crivo de Euler (Euler’s Sieve) para encontrar todos os números primos menores
   -- que um determinado inteiro dado.
+ex5 :: Int -> [Int]
+ex5 n = reverse (ex5Aux [2..n] [])
+
+ex5Aux :: [Int] -> [Int] -> [Int]
+ex5Aux [] primesList = primesList 
+ex5Aux inputList primes = ex5Aux (tail (ex5diff inputList)) primes++[head(ex5diff inputList)]
+
+ex5diff :: [Int] -> [Int]
+ex5diff input = (\\) input (map (* head input) input) 
+
+-- x First, make a list of numbers from 2, as large as you wish; call the maximum number n.
+--   Second, extract the first number from the list, make a new list in which each element 
+--      of the original list, including the first, is multiplied by the extracted first number.
+--   Third, diff (\\) the new list from the original, keeping in an output list only those
+--      numbers in the original list that do not appear in the new list.
+--   Fourth, output the first number from the list, which is prime, and repeat the second, 
+--      third and fourth steps on the reduced list excluding its first element, continuing until the input list is exhausted.
 
   -- 6. Escreva uma função, usando iterate que devolva uma lista infinita de inteiros de tal forma que o
   -- inteiro 𝑛 será o dobro do inteiro 𝑛 − 1. Esta função deve receber o valor inicial da lista.
@@ -106,5 +123,6 @@ main::IO()
 main = do
   print ex1
   print (fiboCalculator 100000)
-  print (getFactors 9922331)
+  -- print (getFactors 9922331)
   print (ex4 [1..50])
+  print (ex5 30)
