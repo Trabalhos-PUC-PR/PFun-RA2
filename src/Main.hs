@@ -80,6 +80,8 @@ reduce function list acc = reduce function (init list) (function (last list)++ac
 
   -- 4. Escreva uma função que, recebendo uma lista de inteiros, apresente a diferença entre a soma dos
   -- quadrados e o quadrado da soma destes inteiros.
+ex4 :: [Int] -> Int
+ex4 lista = sum(map (^ 2) lista) - (^) (sum lista) 2
 
   -- 5. O Crivo de Eratóstenes não é o melhor algoritmo para encontrar números primos. Crie uma função
   -- que implemente o Crivo de Euler (Euler’s Sieve) para encontrar todos os números primos menores
