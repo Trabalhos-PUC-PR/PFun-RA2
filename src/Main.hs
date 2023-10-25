@@ -1,5 +1,8 @@
 module Main where
-import Distribution.Simple.Program.HcPkg (list)
+import Prelude
+import GHC.Float.RealFracMethods (floorFloatInt)
+import Data.List (sort)
+
 -- Grupo:
 -- André Luiz Kovalski
 -- Gabrielle Louise
@@ -15,7 +18,6 @@ import Distribution.Simple.Program.HcPkg (list)
   -- 1. Escreva uma função que devolva a soma de todos os números menores que 10.000 que sejam
   -- múltiplos de 3 ou 5 e não sejam múltiplos de 2.
 ex1 = sum (ex1Logic 0 [])
-
 ex1Logic :: Int -> [Int] -> [Int]
 ex1Logic 10000 acc = acc
 ex1Logic current acc
@@ -26,7 +28,11 @@ ex1Logic current acc
   -- ímpares menores que 100.000 e a soma de todos os números de Fibonacci pares também
   -- menores que 100.000.
 fiboCalculator :: Int -> Int
-fiboCalculator n = sum (filter odd (fibo n [0, 1])) - sum (filter even (fibo n [0, 1]))
+fiboCalculator n = fiboAux (fibo n [0, 1])
+
+-- essa função só existe pra não ter que processar fibonacci tudo denovo
+fiboAux :: [Int] -> Int
+fiboAux list = sum (filter odd list) - sum (filter even list)
 
 last2:: [a] -> a
 last2 list = head(tail(reverse list))
@@ -42,6 +48,35 @@ fibo target list
   -- 3. Fatorar um número em seus divisores primos é uma tarefa importante para a segurança de dados.
   -- Escreva uma função que devolva os fatores primos de qualquer inteiro dado maior que
   -- 100.000.000 e menor que 1.000.000.000.
+
+-- Find the square root of the integer number n and round down to the closest whole number. Let's call this number s.
+-- Start with the number 1 and find the corresponding factor pair: n ÷ 1 = n. So 1 and n 
+    -- are a factor pair because division results in a whole number with zero remainder.
+-- Do the same with the number 2 and proceed testing all integers (n ÷ 2, n ÷ 3, n ÷ 4... n ÷ s) up through the square 
+    -- root rounded to s. Record the factor pairs where division results in whole integer numbers with zero remainders.
+-- When you reach n ÷ s and you have recorded all factor pairs you have successfully factored the number n.
+isPrime :: Int -> Int -> Bool
+isPrime i 0 = False
+isPrime i 1 = False
+isPrime i num
+  | i == num = True
+  | mod num i == 0 = False
+  | otherwise = isPrime (i+1) num 
+
+getFactorPair:: Int -> Int -> [Int]
+getFactorPair target y
+ |  mod target y == 0 = [div target y, y]
+ | otherwise = []
+
+getRoundedDownSqrt :: Int -> Int
+getRoundedDownSqrt target = floorFloatInt(sqrt (fromIntegral target))
+
+getFactors :: Int -> [Int]
+getFactors target = filter (isPrime 2) (sort(reduce (getFactorPair target) [1..getRoundedDownSqrt target] []))
+
+reduce :: (Int -> [Int]) -> [Int] -> [Int] -> [Int]
+reduce _ [] acc = acc 
+reduce function list acc = reduce function (init list) (function (last list)++acc)
 
   -- 4. Escreva uma função que, recebendo uma lista de inteiros, apresente a diferença entre a soma dos
   -- quadrados e o quadrado da soma destes inteiros.
@@ -69,3 +104,5 @@ main::IO()
 main = do
   print ex1
   print (fiboCalculator 100000)
+  print (getFactors 9922331)
+  print (ex4 [1..50])
