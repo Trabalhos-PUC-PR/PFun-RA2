@@ -100,6 +100,7 @@ ex5diff input = (\\) input (map (* head input) input)
 
   -- 6. Escreva uma função, usando iterate que devolva uma lista infinita de inteiros de tal forma que o
   -- inteiro 𝑛 será o dobro do inteiro 𝑛 − 1. Esta função deve receber o valor inicial da lista.
+ex6 = iterate (2*) 
 
   -- 7. Escreva uma função que receba uma string e devolva outra string com as vogais trocadas. De tal
   -- forma que: 𝑎 será transformado em 𝑢; 𝑒 será transformado em 𝑜; 𝑖 não será transformado; 𝑜 será
@@ -134,6 +135,7 @@ main = do
   print (ex3 9922331)
   print (ex4 [1..50])
   print (ex5 30)
+  print (take 15 (ex6 2))
   print (ex7 "as vogais foram trocadas!")
   print (ex8 150)
   print (ex9 (+) [1, 2, 3] [10, 11, 12, 13, 14, 15])
