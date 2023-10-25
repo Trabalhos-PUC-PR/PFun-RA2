@@ -25,21 +25,19 @@ ex1Logic current acc
   -- 2. Escreva uma função que devolva a diferença entre a soma de todos os números de Fibonacci
   -- ímpares menores que 100.000 e a soma de todos os números de Fibonacci pares também
   -- menores que 100.000.
-fiboGenerator :: Int -> (Int->Bool) -> [Int]
-fiboGenerator n f = fibo n 1 f [0] []
+fiboCalculator :: Int -> Int
+fiboCalculator n = sum (filter odd (fibo n [0, 1])) - sum (filter even (fibo n [0, 1]))
 
-last2:: [Int] -> Int
+last2:: [a] -> a
 last2 list = head(tail(reverse list))
 
 nextFibo:: [Int] -> Int
-nextFibo list = last list + last2 list 
+nextFibo list = last list + last2 list
 
--- limit, condition, fiboRangeList, filteredList
-fibo :: Int -> Int -> (Int->Bool) -> [Int] -> [Int] -> [Int]
-fibo limit current condition fiboList filterList
- | nextFibo fiboList > limit = filterList
- | condition current = fibo limit (nextFibo fiboList) condition (fiboList++[nextFibo fiboList]) (filterList++[nextFibo fiboList])
- | otherwise = fibo limit (nextFibo fiboList) condition (fiboList++[nextFibo fiboList]) filterList
+fibo :: Int -> [Int] -> [Int]
+fibo target list
+  | nextFibo list >= target = list
+  | otherwise = fibo target (list ++ [nextFibo list])
 
   -- 3. Fatorar um número em seus divisores primos é uma tarefa importante para a segurança de dados.
   -- Escreva uma função que devolva os fatores primos de qualquer inteiro dado maior que
@@ -70,7 +68,4 @@ fibo limit current condition fiboList filterList
 main::IO()
 main = do
   print ex1
-  -- print (fiboGenerator 100000 odd)
-  -- print (fiboGenerator 100000 even)
-  print (fiboGenerator 10 odd)
-  print (fiboGenerator 10 even)
+  print (fiboCalculator 100000)
