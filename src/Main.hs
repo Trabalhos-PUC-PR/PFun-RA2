@@ -1,7 +1,7 @@
 module Main where
 import Prelude
 import GHC.Float.RealFracMethods (floorFloatInt)
-import Data.List (sort, (\\))
+import Data.List (sort, (\\), intersect)
 
 -- Grupo:
 -- André Luiz Kovalski
@@ -27,8 +27,8 @@ ex1Logic current acc
   -- 2. Escreva uma função que devolva a diferença entre a soma de todos os números de Fibonacci
   -- ímpares menores que 100.000 e a soma de todos os números de Fibonacci pares também
   -- menores que 100.000.
-fiboCalculator :: Int -> Int
-fiboCalculator n = fiboAux (fibo n [0, 1])
+ex2 :: Int -> Int
+ex2 n = fiboAux (fibo n [0, 1])
 
 -- essa função só existe pra não ter que processar fibonacci tudo denovo
 fiboAux :: [Int] -> Int
@@ -71,8 +71,9 @@ getFactorPair target y
 getRoundedDownSqrt :: Int -> Int
 getRoundedDownSqrt target = floorFloatInt(sqrt (fromIntegral target))
 
-getFactors :: Int -> [Int]
-getFactors target = filter (isPrime 2) (sort(reduce (getFactorPair target) [1..getRoundedDownSqrt target] []))
+-- getFactors
+ex3 :: Int -> [Int]
+ex3 target = filter (isPrime 2) (sort(reduce (getFactorPair target) [1..getRoundedDownSqrt target] []))
 
 reduce :: (Int -> [Int]) -> [Int] -> [Int] -> [Int]
 reduce _ [] acc = acc 
@@ -86,6 +87,7 @@ ex4 lista = sum(map (^ 2) lista) - (^) (sum lista) 2
   -- 5. O Crivo de Eratóstenes não é o melhor algoritmo para encontrar números primos. Crie uma função
   -- que implemente o Crivo de Euler (Euler’s Sieve) para encontrar todos os números primos menores
   -- que um determinado inteiro dado.
+  -- https://programmingpraxis.com/2011/02/25/sieve-of-euler/
 ex5 :: Int -> [Int]
 ex5 n = reverse (ex5Aux [2..n] [])
 
@@ -96,24 +98,26 @@ ex5Aux inputList primes = ex5Aux (tail (ex5diff inputList)) primes++[head(ex5dif
 ex5diff :: [Int] -> [Int]
 ex5diff input = (\\) input (map (* head input) input) 
 
--- x First, make a list of numbers from 2, as large as you wish; call the maximum number n.
---   Second, extract the first number from the list, make a new list in which each element 
---      of the original list, including the first, is multiplied by the extracted first number.
---   Third, diff (\\) the new list from the original, keeping in an output list only those
---      numbers in the original list that do not appear in the new list.
---   Fourth, output the first number from the list, which is prime, and repeat the second, 
---      third and fourth steps on the reduced list excluding its first element, continuing until the input list is exhausted.
-
   -- 6. Escreva uma função, usando iterate que devolva uma lista infinita de inteiros de tal forma que o
   -- inteiro 𝑛 será o dobro do inteiro 𝑛 − 1. Esta função deve receber o valor inicial da lista.
 
   -- 7. Escreva uma função que receba uma string e devolva outra string com as vogais trocadas. De tal
   -- forma que: 𝑎 será transformado em 𝑢; 𝑒 será transformado em 𝑜; 𝑖 não será transformado; 𝑜 será
   -- transformado em 𝑒 e 𝑢 será transformado em 𝑎;
+ex7 :: String -> String
+ex7 "" = ""
+ex7 input
+  | head input == 'a' = 'u':ex7 (tail input)
+  | head input == 'e' = 'o':ex7 (tail input)
+  | head input == 'o' = 'e':ex7 (tail input)
+  | head input == 'u' = 'a':ex7 (tail input)
+  | otherwise = head input :ex7 (tail input)
 
   -- 8. Nem só de Fibonacci vivem os exemplos de recursão. Escreva uma função que devolva todos os
   -- números de uma sequência de Lucas (2, 1, 3, 4, 7, 11, 18, 29, 47, 76, 123) menores que um inteiro
   -- dado como argumento.
+ex8 :: Int -> [Int]
+ex8 n = fibo n [2, 1]
 
   -- 9. Escreva uma função análoga a função map, disponível no prelude, na qual um predicado, função,
   -- seja aplicado a duas listas e não a apenas uma. Por exemplo 𝑚𝑎𝑝2 (+) [1,2,3] [10,11,12] deve
@@ -122,7 +126,9 @@ ex5diff input = (\\) input (map (* head input) input)
 main::IO()
 main = do
   print ex1
-  print (fiboCalculator 100000)
-  -- print (getFactors 9922331)
+  print (ex2 100000)
+  print (ex3 9922331)
   print (ex4 [1..50])
   print (ex5 30)
+  print (ex7 "as vogais foram trocadas!")
+  print (ex8 150)
