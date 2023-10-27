@@ -12,4 +12,4 @@ Macros customizados dentro do ambiente do ghci:
 :rerun --Recompila e roda novamente o projeto atual, chamando a funcao main
 ```
 
-### [Ambiente do Replit](https://replit.com/@Kovalskirgb/extra-2-haskell)
+### [Ambiente do Replit](https://replit.com/@Kovalskirgb/RA2#src/Main.hs)
