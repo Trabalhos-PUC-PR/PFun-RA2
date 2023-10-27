@@ -3,7 +3,7 @@ import Ex1 ( ex1 )
 import Ex2 ( ex2 )
 import Ex3 ( ex3 )
 import Ex4 ( ex4 )
-import Ex5 ( ex5 )
+import Ex5 ( ex5 , primes )
 import Ex6 ( ex6 )
 import Ex7 ( ex7 )
 import Ex8 ( ex8 )
@@ -33,7 +33,6 @@ main = do
   print (ex8 123)
   print (ex9 (+) [1, 2, 3] [10, 11, 12, 13, 14, 15])
 
-  print (take 10 primes)
-
+  print(take 10 primes)
 
   

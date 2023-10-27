@@ -1,5 +1,6 @@
 module Ex5 where
 import Data.List ((\\))
+import Prelude
 
 -- 5. O Crivo de Eratóstenes não é o melhor algoritmo para encontrar números primos. Crie uma função
 -- que implemente o Crivo de Euler (Euler’s Sieve) para encontrar todos os números primos menores

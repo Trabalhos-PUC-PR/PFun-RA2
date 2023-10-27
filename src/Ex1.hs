@@ -1,4 +1,5 @@
 module Ex1 where
+import Prelude
 
 -- 1. Escreva uma função que devolva a soma de todos os números menores que 10.000 que sejam
 -- múltiplos de 3 ou 5 e não sejam múltiplos de 2.

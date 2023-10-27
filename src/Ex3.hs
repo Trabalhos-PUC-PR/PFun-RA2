@@ -1,4 +1,5 @@
 module Ex3 where
+import Prelude
 import GHC.Float.RealFracMethods (floorFloatInt)
 import Data.List (sort)
 

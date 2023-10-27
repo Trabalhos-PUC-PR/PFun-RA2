@@ -1,4 +1,5 @@
 module Ex9 where
+import Prelude
 
 -- 9. Escreva uma função análoga a função map, disponível no prelude, na qual um predicado, função,
 -- seja aplicado a duas listas e não a apenas uma. Por exemplo 𝑚𝑎𝑝2 (+) [1,2,3] [10,11,12] deve

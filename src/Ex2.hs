@@ -1,4 +1,5 @@
 module Ex2  where
+import Prelude
 
 -- 2. Escreva uma função que devolva a diferença entre a soma de todos os números de Fibonacci
 -- ímpares menores que 100.000 e a soma de todos os números de Fibonacci pares também

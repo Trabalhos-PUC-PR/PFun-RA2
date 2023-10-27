@@ -1,4 +1,5 @@
 module Ex7 where
+import Prelude
 
 -- 7. Escreva uma função que receba uma string e devolva outra string com as vogais trocadas. De tal
 -- forma que: 𝑎 será transformado em 𝑢; 𝑒 será transformado em 𝑜; 𝑖 não será transformado; 𝑜 será
