@@ -1,7 +1,7 @@
 module Ex3 where
 import Prelude
 import GHC.Float.RealFracMethods (floorFloatInt)
-import Data.List (sort)
+import Data.List (sort, intersect)
 
 -- 3. Fatorar um número em seus divisores primos é uma tarefa importante para a segurança de dados.
 -- Escreva uma função que devolva os fatores primos de qualquer inteiro dado maior que
@@ -15,10 +15,9 @@ import Data.List (sort)
 -- When you reach n ÷ s and you have recorded all factor pairs you have successfully factored the number n.
 
 isPrime :: Int -> Int -> Bool
-isPrime i 0 = False
-isPrime i 1 = False
 isPrime i num
-    | i == num = True
+    | i <= 1 = False
+    | i*i > num = True
     | mod num i == 0 = False
     | otherwise = isPrime (i+1) num 
 
@@ -32,8 +31,20 @@ getRoundedDownSqrt target = floorFloatInt(sqrt (fromIntegral target))
 
 -- getFactors
 ex3 :: Int -> [Int]
-ex3 target = filter (isPrime 2) (sort(reduce (getFactorPair target) [1..getRoundedDownSqrt target] []))
+ex3 target = reverse(intersect (reduce (getFactorPair target) [1..getRoundedDownSqrt target] []) (gfgnum1 target [])) 
 
 reduce :: (Int -> [Int]) -> [Int] -> [Int] -> [Int]
 reduce _ [] acc = acc 
-reduce function list acc = reduce function (init list) (function (last list)++acc)
+reduce function list acc = reduce function (tail list) (function (head list)++acc)
+
+-- https://www.geeksforgeeks.org/prime-factor/
+gfgnum1 :: Int -> [Int] -> [Int]
+gfgnum1 n primes
+    | even n = gfgnum1 (div n 2) [2]++primes
+    | otherwise = gfgnum2 n 3 primes
+
+gfgnum2 :: Int -> Int -> [Int] -> [Int]
+gfgnum2 n i primes
+    | getRoundedDownSqrt n < i = n:primes
+    | mod n i == 0 = gfgnum2 (div n i) i (i:primes)
+    | otherwise = gfgnum2 n (i+2) primes
